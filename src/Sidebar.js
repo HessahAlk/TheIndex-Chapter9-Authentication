@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Logo
 import logo from "./assets/theindex.svg";
+
+//logiut
+import LogoutForm from "./LogoutForm"
 
 class Sidebar extends Component {
   render() {
@@ -15,16 +19,22 @@ class Sidebar extends Component {
           </h4>
         </section>
         <div className="fixed-bottom">
-          <Link to="/login" className="btn btn-info m-2 float-left">
+        {this.props.user? <LogoutForm/>:<div>  <Link to="/login" className="btn btn-info m-2 float-left">
             Login
           </Link>
           <Link to="/signup" className="btn btn-success m-2 float-left">
             Signup
-          </Link>
+          </Link></div>}
+
         </div>
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    user:state.rootAuth.user,
+  };
+};
 
-export default Sidebar;
+export default connect(mapStateToProps)(Sidebar);
